@@ -1,12 +1,15 @@
 <resources>
-    <string name="app_name">SlipGajiOnline</string>
+    <string name="app_name">Slip Gaji Online</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="prompt_nik">NIK</string>
+    <string name="prompt_password">Sandi</string>
+    <string name="old_password">Sandi lama</string>
+    <string name="new_password">Sandi baru</string>
+    <string name="action_sign_in">Masuk</string>
+    <string name="action_sign_in_short">Masuk</string>
+    <string name="action_change">Ganti</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>

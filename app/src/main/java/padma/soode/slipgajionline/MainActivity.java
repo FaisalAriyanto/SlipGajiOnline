@@ -2,29 +2,28 @@ package padma.soode.slipgajionline;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.aakira.expandablelayout.ExpandableLayoutListener;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     public static boolean isLogin;
-    private SeekBar seekbar;
+    private Spinner spinner;
     private RelativeLayout gaji;
     private RelativeLayout potongan;
     private RelativeLayout lembur;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView gajiImg;
     private TextView gajiBulan;
     private Button downloadBtn;
+    private Button sendEmailBtn;
 
 
     @Override
@@ -54,19 +54,28 @@ public class MainActivity extends AppCompatActivity {
         potonganImg = (ImageView) findViewById(R.id.potongan_img);
         lemburImg = (ImageView) findViewById(R.id.lembur_img);
         gajiImg = (ImageView) findViewById(R.id.gaji_img);
-        seekbar = (SeekBar) findViewById(R.id.seekbar);
+        spinner = (Spinner) findViewById(R.id.spinner);
         lembur = (RelativeLayout) findViewById(R.id.lembur);
         gaji = (RelativeLayout) findViewById(R.id.gaji);
         potongan = (RelativeLayout) findViewById(R.id.potongan);
         gajiBulan = (TextView) findViewById(R.id.gaji_bulan);
         downloadBtn = (Button) findViewById(R.id.downloadBtn);
+        sendEmailBtn = (Button) findViewById(R.id.sendEmailBtn);
 
         getSupportActionBar().setTitle("Padma Soode");
-        seekbar.setProgress(2);
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+        ArrayList<String> bulan = new ArrayList<>();
+        bulan.add("2 Bulan Lalu");
+        bulan.add("1 Bulan Lalu");
+        bulan.add("Bulan ini");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, bulan);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.d("", "");
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String text = "";
                 switch (i) {
                     case 0:
@@ -84,16 +93,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
+        spinner.setSelection(2);
 
         gaji.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +224,26 @@ public class MainActivity extends AppCompatActivity {
 //                        getApplicationContext(),
 //                        "https://drive.google.com/open?id=0B6Ntai66P4rmSEVmVENvaGNuckU",
 //                        "/");
+            }
+        });
+
+        sendEmailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                String filename="contacts_sid.vcf";
+//                File filelocation = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), filename);
+//                Uri path = Uri.fromFile(filelocation);
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+// set the type to 'email'
+                emailIntent.setType("vnd.android.cursor.dir/email");
+                String to[] = {"test@gmail.com"};
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+// the attachment
+//                emailIntent .putExtra(Intent.EXTRA_STREAM, path);
+// the mail subject
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Slip gaji");
+                startActivity(Intent.createChooser(emailIntent, "Mengirim email..."));
+
             }
         });
 

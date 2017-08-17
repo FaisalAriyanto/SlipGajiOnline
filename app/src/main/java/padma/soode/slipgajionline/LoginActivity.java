@@ -3,22 +3,20 @@ package padma.soode.slipgajionline;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,8 +27,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView lupaPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
+        lupaPass = (TextView) findViewById(R.id.lupa_password);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -92,6 +90,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
 //                ExpandableRelativeLayout expandableLayout1 = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout1);
 //                expandableLayout1.toggle();
+            }
+        });
+
+        lupaPass.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
             }
         });
 
@@ -197,7 +202,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -322,7 +327,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             boolean isSuccess = false;
 
-            if (mEmail.equals("admin@mail.com") && mPassword.equals("admin")) {
+            if (mEmail.equals("12345678") && mPassword.equals("admin")) {
                 isSuccess = true;
             }
 //            for (String credential : DUMMY_CREDENTIALS) {
